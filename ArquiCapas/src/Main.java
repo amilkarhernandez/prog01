@@ -6,31 +6,83 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Iniciando La paridera");
-
         StudentsService studentsService = new StudentsService();
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Ingrese Codigo: ");
-        String code = sc.next();
+        int option;
 
-        System.out.println("Ingrese Nombre: ");
-        String name = sc.next();
+        do {
+            System.out.println("\n===== MENÚ ESTUDIANTES =====");
+            System.out.println("1. Registrar estudiante");
+            System.out.println("2. Listar todos los estudiantes");
+            System.out.println("3. Eliminar estudiante por código");
+            System.out.println("4. Calcular promedio de notas");
+            System.out.println("0. Salir");
+            System.out.print("Seleccione una opción: ");
+            option = scanner.nextInt();
+            scanner.nextLine();
 
-        System.out.println("Ingrese Nota: ");
+            switch (option) {
+                case 1:
+                    saveStudent(scanner, studentsService);
+                    break;
+                case 2:
+                    listAllStudents(studentsService);
+                    break;
+
+                case 3:
+                    deleteStudent(scanner, studentsService);
+                    break;
+
+                case 4:
+                    calculateAverage(studentsService);
+                    break;
+
+                case 0:
+                    System.out.println("¡Hasta luego!");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+            }
+
+        } while (option != 0);
+
+        scanner.close();
+    }
+
+
+
+    static void saveStudent(Scanner sc, StudentsService st){
+        System.out.print("Ingrese el código: ");
+        String code = sc.nextLine();
+        System.out.print("Ingrese el nombre: ");
+        String name = sc.nextLine();
+        System.out.print("Ingrese la nota (0-5): ");
         int note = sc.nextInt();
 
-        Students students = new Students(name, code, note);
+        Students s = new Students(name, code, note);
 
-        studentsService.saveService(students);
+        st.saveService(s);
+    }
 
-        System.out.println("Guardando---- >");
+    static void listAllStudents(StudentsService st){
+        st.listAll();
+    }
 
-        System.out.println("------------------------");
-        System.out.println("Datos Guardados");
-        System.out.println("-------------------------");
-        for (Students s: studentsService.listAllServices()){
-            System.out.println(s);
+    static void deleteStudent(Scanner sc, StudentsService st){
+        System.out.print("Ingrese el código: ");
+        String code = sc.nextLine();
+
+        if(st.deleteByCode(code)){
+            System.out.println("Se Elimino correctamente el Estudiante");
+        }else{
+            System.out.println("Ocurrio un Error al eliminar el Estudiante");
         }
     }
+
+    static void calculateAverage(StudentsService st){
+        System.out.println("El promedio es: "+ st.calculateAverage());
+    }
+
 }
