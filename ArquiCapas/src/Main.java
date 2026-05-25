@@ -1,5 +1,7 @@
 import entities.Students;
+import entities.Teacher;
 import services.StudentsService;
+import services.TeacherServices;
 
 import java.util.Scanner;
 
@@ -7,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
         StudentsService studentsService = new StudentsService();
+        TeacherServices teacherServices = new TeacherServices();
         Scanner scanner = new Scanner(System.in);
 
         int option;
@@ -17,6 +20,8 @@ public class Main {
             System.out.println("2. Listar todos los estudiantes");
             System.out.println("3. Eliminar estudiante por código");
             System.out.println("4. Calcular promedio de notas");
+            System.out.println("5. Registrar profesor");
+            System.out.println("6. Listar Profesores Activos");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
             option = scanner.nextInt();
@@ -36,6 +41,13 @@ public class Main {
 
                 case 4:
                     calculateAverage(studentsService);
+                    break;
+
+                case 5:
+                    registerTeacher(scanner, teacherServices);
+                    break;
+                case 6:
+                    listarTeacherActives(teacherServices);
                     break;
 
                 case 0:
@@ -83,6 +95,22 @@ public class Main {
 
     static void calculateAverage(StudentsService st){
         System.out.println("El promedio es: "+ st.calculateAverage());
+    }
+
+    static void  registerTeacher(Scanner sc, TeacherServices teacherServices){
+        System.out.print("Ingrese el código: ");
+        int code = sc.nextInt();
+        System.out.print("Ingrese el nombre: ");
+        String name = sc.next();
+        System.out.print("Ingrese el Status: ");
+        boolean status = sc.nextBoolean();
+
+        Teacher t = new Teacher(code, name, status);
+        teacherServices.register(t);
+    }
+
+    static void listarTeacherActives(TeacherServices teacherServices){
+        teacherServices.getTeacherActive();
     }
 
 }
