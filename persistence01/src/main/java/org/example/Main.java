@@ -1,8 +1,11 @@
-import entities.Students;
-import entities.Teacher;
-import services.TeacherServices;
-import services.impl.StudentServicesImpl;
-import services.interfaces.IStudentService;
+package org.example;
+
+
+import org.example.entities.Students;
+import org.example.entities.Teacher;
+import org.example.services.TeacherServices;
+import org.example.services.impl.StudentServicesImpl;
+import org.example.services.interfaces.IStudentService;
 
 import java.util.Scanner;
 
